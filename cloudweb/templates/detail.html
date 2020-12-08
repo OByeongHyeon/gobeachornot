@@ -3,8 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>detail</title>
+    <style>
+        h1 {text-align: center; color:dodgerblue}
+        div {color:dodgerblue, font-size:15px;}
+        a {color:black;}
+        ul {margin-left:3%;}
+        h3 {margin-left:5%;}
+    </style>
 </head>
 <body>
-<h2></h2>
+    <h1>{{ result['해수욕장명'] }} 해수욕장</h1>
+    <div id="info">
+    <ul>
+        <li>주소 : {{ result['주소'] }}</li>
+        <li>개장일 : {{ result['개장일'] }} / 폐장일 : {{ result['폐장일'] }}</li>
+        <li>연락처 : {{ result['연락처'] }}</li>
+        {% if result['홈페이지'] != '-' %}
+        <li>사이트 : <a href="{{ result['홈페이지'] }}" target="_blank">{{ result['홈페이지'] }}</a></li>
+        {% else %}
+        <li>사이트 : {{ result['홈페이지'] }}</li>
+        {% endif %}
+    </ul>
+    <ul>
+        <li>해변폭 : {{ result['beach_wid'] }}</li>
+        <li>해변총연장 : {{ result['beach_len'] }}</li>
+        <li>해변 특징 : {{ result['beach_knd'] }}</li>
+        <li>위도, 경도 : {{ result['lat'] }}, {{ result['lon'] }}</li>
+    </ul>
+    <h3>휴양 적합 여부 :
+        {% if result['휴양적합여부'] == '부적합1' %}
+        <span style="color:red">부적합</span>
+        {% elif result['휴양적합여부'] == '부적합2' %}
+        <span style="color:orange">부적합</span>
+        {% else %}
+        <span style="color">적합</span>
+        {% endif %}
+    </h3></div>
+    <table border="2", width="90%", align="center">
+        <thead>
+            <tr>
+                <th>주요 행사</th>
+            </tr>
+            <tr>
+                <td align="center">{{ result['주요행사'] }}</td>
+            </tr>
+        </thead>
+    </table><br>
+    <table border="2", width="90%", align="center">
+        <thead>
+            <tr>
+                <th colspan="5">수질 검사 결과</th>
+            </tr>
+            <tr>
+                <td align="center" width="150" height="80">대장균 : {{ result['대장균'] }}</td>
+                <td align="center" width="150">장구균 : {{ result['장구균'] }}</td>
+                <td align="center">조사지점<br>위도, 경도 : {{ result['조사지점(위도)'], result['조사지점(경도)'] }}</td>
+            </tr>
+            <tr>
+                <td align="center" colspan="5">판정 : <strong style="font-size:20px"><span style="color:green">{{ result['적합여부'] }}</span></strong></td>
+            </tr>
+        </thead>
+    </table><br>
+    <table border="2", width="90%", align="center">
+        <thead>
+            <tr>
+                <th colspan="2">해수욕장 혼잡도</th>
+            </tr>
+            <tr>
+                <td align="center">유니크 인구수 : {{ result['uniqPop'] }}</td>
+                {% if result['congestion'] == '1' %}
+                    <td align="center">혼잡도 : <strong style="font-size:20px"><span style="color:green">원활</span></strong></td>
+                {% elif result['congestion'] == '2' %}
+                    <td align="center">혼잡도 : <strong style="font-size:20px"><span style="color:orange">주의</span></strong></td>
+                {% elif result['congestion'] == '3' %}
+                    <td align="center">혼잡도 : <strong style="font-size:20px"><span style="color:red">혼잡</span></strong></td>
+                {% endif %}
+            </tr>
+        </thead>
+    </table>
 </body>
 </html>

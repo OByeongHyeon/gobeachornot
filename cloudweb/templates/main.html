@@ -47,6 +47,8 @@
     </script>
     <style>
         h1 {text-align: center; color:dodgerblue}
+        h2 {text-align: center;}
+        a {color:black;}
         form {text-align: center;}
         p {margin-bottom: 4%;}
         select {font-size: 14pt; margin-right: 5%;}
@@ -81,7 +83,15 @@
         </select>
         <input type="submit", value="조회"></p>
     </form>
+    {% if result is defined %}
+    <h2>
+        {{ result['시도 주소'] }}
+        {% if result['시군구 주소'] != 'none' %}
+            {{ result['시군구 주소'] }}
+        {% endif %}
+    </h2>
     <table id = result, border="2">
+
         <thead>
             <tr>
                 <th>이름</th>
@@ -92,19 +102,24 @@
             </tr>
         </thead>
         <tbody>
-            {% if result is defined %}
             {% for i in range(result['해수욕장명']|length) %}
                 <tr>
-                    <td><a href="{{ url_for('detail') + '?name=' + result['해수욕장명'][i] }}" onclick="window.open(this.href, '_blank', 'width=510, height=620, toolbars=no, scrollbars=yes'); return false">{{ result['해수욕장명'][i] }}</a></td>
+                    <td><a href="{{ url_for('detail') + '?name=' + result['해수욕장명'][i] + '&sido=' + result['시도 주소'] }}" onclick="window.open(this.href, '_blank', 'width=800, height=620, toolbars=no, scrollbars=yes'); return false">{{ result['해수욕장명'][i] }}</a></td>
                     <td>{{ result['개장일'][i] }}</td>
                     <td>{{ result['폐장일'][i] }}</td>
-                    <td><a href="{{ result['홈페이지'][i] }}">{{ result['홈페이지'][i] }}</a></td>
+                    <td>
+                        {% if result['홈페이지'][i] == '-' %}
+                            {{ result['홈페이지'][i] }}
+                        {% else %}
+                            <a href="{{ result['홈페이지'][i] }}" target="_blank">{{ result['홈페이지'][i] }}</a>
+                        {% endif %}
+                    </td>
                     <td>{{ result['연락처'][i] }}</td>
                 </tr>
             {% endfor %}
-            {% endif %}
         </tbody>
-
     </table>
+    {% endif %}
+
 </body>
 </html>
