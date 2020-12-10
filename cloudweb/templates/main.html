@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>해수욕장 휴양 적합 여부 판별</title>
     <script>
         function categoryChange(e) {
             var bs = ["해운대구", "서구", "사하구", "수영군", "기장군"];
@@ -46,21 +46,42 @@
 
     </script>
     <style>
-        h1 {text-align: center; color:dodgerblue}
+        h1 {text-align:center;
+            color:dodgerblue;
+            border:1px solid dodgerblue;
+            margin:0;
+            padding:20px;
+        }
         h2 {text-align: center;}
         a {color:black;}
         form {text-align: center;}
-        p {margin-bottom: 4%;}
+        p {margin-bottom: 3%;}
         select {font-size: 14pt; margin-right: 5%;}
         td {overflow: auto;}
         th {text-align: center;}
-        table {text-align: center; table-layout: fixed; margin-left: auto; margin-right: auto; width: 700px; height: 100px}
+        table {text-align: center;
+            border-color:dodgerblue;
+            table-layout: fixed;
+            margin-left: auto;
+            margin-right: auto;
+            width: 800px;
+            height: 150px;
+            padding:10px;
+        }
+        .favor {
+            text-align: right;
+            padding-right: 30px;
+            margin-top: 0px;
+        }
         #search {width: 600px; height: 40px; font-size:24px; border-width: 7px; border-color:dodgerblue}
     </style>
 </head>
 <body>
     <h1>해수욕장 휴양 적합 여부 판별 서비스</h1><br>
-    <form action = "http://127.0.0.1:5000/main" method = "POST">
+    <p class="favor">
+        <a href="{{ url_for('login') }}"><u>관심 해수욕장 조회</u></a>
+    </p>
+    <form action = "{{ url_for('main') }}" method = "POST">
         <p ><input id="search", type="text", name="search">
         <input type="submit", value="검색"></p>
         <p><select name="sido" onchange="categoryChange(this)">
@@ -82,12 +103,17 @@
 
         </select>
         <input type="submit", value="조회"></p>
+
     </form>
+
+
     {% if result is defined %}
     <h2>
-        {{ result['시도 주소'] }}
-        {% if result['시군구 주소'] != 'none' %}
-            {{ result['시군구 주소'] }}
+        {% if result['시도 주소'] != 'none' %}
+            {{ result['시도 주소'] }}
+            {% if result['시군구 주소'] != 'none' %}
+                {{ result['시군구 주소'] }}
+            {% endif %}
         {% endif %}
     </h2>
     <table id = result, border="2">

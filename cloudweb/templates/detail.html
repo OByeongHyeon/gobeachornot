@@ -7,8 +7,21 @@
         h1 {text-align: center; color:dodgerblue}
         div {color:dodgerblue, font-size:15px;}
         a {color:black;}
+        .right-ul {padding:0px;}
         ul {margin-left:3%;}
-        h3 {margin-left:5%;}
+        #info{
+            display:grid;
+            grid-template-columns: 1fr 1fr
+        }
+        table {
+            padding: 10px;
+        }
+        h3 {
+            border-bottom:3px solid dodgerblue;
+            padding:3px;
+            margin-left:5%;
+            display:inline-block;
+        }
     </style>
 </head>
 <body>
@@ -24,13 +37,15 @@
         <li>사이트 : {{ result['홈페이지'] }}</li>
         {% endif %}
     </ul>
-    <ul>
+    <ul class="right-ul">
         <li>해변폭 : {{ result['beach_wid'] }}</li>
         <li>해변총연장 : {{ result['beach_len'] }}</li>
         <li>해변 특징 : {{ result['beach_knd'] }}</li>
         <li>위도, 경도 : {{ result['lat'] }}, {{ result['lon'] }}</li>
     </ul>
-    <h3>휴양 적합 여부 :
+    </div>
+    <h3>
+        휴양 적합 여부 :
         {% if result['휴양적합여부'] == '부적합1' %}
         <span style="color:red">부적합</span>
         {% elif result['휴양적합여부'] == '부적합2' %}
@@ -38,7 +53,7 @@
         {% else %}
         <span style="color">적합</span>
         {% endif %}
-    </h3></div>
+    </h3>
     <table border="2", width="90%", align="center">
         <thead>
             <tr>
