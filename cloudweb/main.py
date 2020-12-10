@@ -13,8 +13,6 @@ url3 = 'http://apis.data.go.kr/1192000/service/OceansBeachInfoService1/getOceans
 key2 = 'JczkNAYUK0nuC7gzVNgSj2%2FUHiwakF7h%2BMI7BkHeAuKc7ctuY961tl%2F%2B%2Fo2hCS2TjorkkeQ2IEek%2BGPFiC0Xdg%3D%3D'
 
 app = Flask(__name__)
-# app.config["MONGO_URI"] = "mongodb://ec2-13-125-5-167.ap-northeast-2.compute.amazonaws.com:27017/gobeachornot"
-# mongo = PyMongo(app)
 
 @app.route('/')
 def index():
@@ -171,7 +169,6 @@ def checkid():
     if request.method == 'POST':
         info = request.form
 
-        client = pymongo.MongoClient("mongodb://bh:123@13.125.5.167:27017/gobeachornot")  # defaults to port 27017
         db = client.gobeachornot
         col = db.signup
 
@@ -191,7 +188,6 @@ def checkid():
 @app.route('/mybeach')
 def mybeach():
 
-    client = pymongo.MongoClient("mongodb://bh:123@13.125.5.167:27017/gobeachornot")  # defaults to port 27017
     db = client.gobeachornot
     col_list = db.collection_names()
     # col = db.signup
@@ -204,7 +200,6 @@ def signup():
     if request.method == 'GET':
         return render_template("signup.html")
     if request.method == 'POST':
-        client = pymongo.MongoClient("mongodb://bh:123@13.125.5.167:27017/gobeachornot")  # defaults to port 27017
         db = client.gobeachornot
         col = db.signup
 
